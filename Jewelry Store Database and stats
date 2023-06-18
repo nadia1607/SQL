@@ -1,0 +1,30 @@
+CREATE TABLE JEWELRY (id INTEGER PRIMARY KEY, name TEXT, quantity INTEGER, aisle INTEGER,price NUMERIC);
+
+INSERT INTO jewelry VALUES (1,"bangles",5,10,20);
+INSERT INTO jewelry VALUES (2, "bracelets",10,10,15);
+INSERT INTO jewelry VALUES (3, "anklets",12,11, 12);
+INSERT INTO jewelry VALUES (4,"necklaces", 12,9,30);
+INSERT INTO jewelry VALUES (5, "earrings",12,8,50);
+INSERT INTO jewelry VALUES (6, "rings",20,10,65);
+INSERT INTO jewelry VALUES (7, "watches",20,5,19);
+INSERT INTO jewelry VALUES (8, "wrist bands",20,10,10);
+INSERT INTO jewelry VALUES (9, "nose studs",10,5,9);
+INSERT INTO jewelry VALUES (10, "nose rings", 16, 5, 6);
+INSERT INTO jewelry VALUES (11, "brooches", 2,1,9);
+INSERT INTO jewelry VALUES (12, "pendants", 5,9, 8);
+INSERT INTO jewelry VALUES (13, "cufflinks", 5,1,25);
+INSERT INTO jewelry VALUES (14, "crowns",2,2,22);
+INSERT INTO jewelry VALUES (15, "choker",3,20, 67);
+
+--Display data ordered by price
+
+SELECT * FROM jewelry ORDER BY price asc;
+
+--What is the total quantity of items?
+
+SELECT sum (quantity) FROM jewelry;
+
+--What are the items with price range of 30 or more?
+
+SELECT * FROM jewelry WHERE price>=30 ORDER BY price asc;
+
