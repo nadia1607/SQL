@@ -116,18 +116,27 @@ INSERT INTO sales(transaction_date,product,price,payment_type,name,city,state,co
 INSERT INTO sales(transaction_date,product,price,payment_type,name,city,state,country,account_created,last_login,latitude,longitude) VALUES ('1/13/09 19:39','Chair',1200,'Visa','Jolene','Englewood','CO','United states','1/6/09 22:00','1/14/09 22:02',39.64778,-104.98722);
 
 SELECT * FROM SALES;
+
+--What was the maximum price of products from the sales table?
 SELECT MAX (price) from sales;
 
+--What was the average price of products from the sales table?
 SELECT AVG (price) from sales;
 
+---What was the minimum price of the products from the sales table?
 SELECT MIN (price) from sales;
+
+--How many transactions were completed using Visa and Amex?
 
 SELECT * FROM sales where payment_type IN ("Visa","Amex");
 
+--Select all from the sales table where the price was less than 1200 and the payment was done through Visa.
+
 SELECT * FROM sales WHERE price>1200 AND payment_type= "Visa";
 
-
+--Select the countries that had more than one state and arrange the states in descending order
 SELECT country,COUNT(state) as state_count from sales group by country having state_count>1 order by state_count desc;
 
+--Select the customers based on their purchases and add another column for a discount coupon of 10% if the price of the product is more than 1500
 SELECT name,
 case when price>1500 THEN "Yes" ELSE "NO" END "Discount Coupon 10%" from sales;
