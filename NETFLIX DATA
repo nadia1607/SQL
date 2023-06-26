@@ -1,6 +1,6 @@
 # This project reveals insights about TV and Movie content hosted on Netflix. 
 
-# The project was written using the PostgreSQL dialect and utilized data from the following two Netflix datasets:
+# The project was written using the PostgreSQL dialect and utilized data from the Netflix database stored athttp://sqlfiddle.com/#!17/7dae0/16/0
 
 CREATE TABLE netflix_titles_info
     ("show_id" varchar(5), "type" varchar(7), "title" varchar(58), "country" varchar(74), "date_added" timestamp, "release_year" int, "rating" varchar(5), "duration" varchar(9), "listed_in" varchar(74))
@@ -64,21 +64,24 @@ VALUES
 
 #1. How many movie titles are there in the database? (movies only, not tv shows) 
 
-SELECT count(*) 
+SELECT COUNT(*) 
 FROM "netflix_titles_info" WHERE type='Movie';
 SELECT MAX (date(date_added)) FROM "netflix_titles_info" 
 
 #2. When was the most recent batch of tv shows and/or movies added to the database? 
-select max(date(date_added))
+
+SELECT MAX(date(date_added))
 FROM "netflix_titles_info";
 
 #3. List all the movies and tv shows in alphabetical order. 
-select title
+
+SELECT title
 FROM "netflix_titles_info"
 ORDER BY title asc;
 
 #4. Who was the Director for the movie The Starling? 
-select 
+
+SELECT 
 director
 FROM "netflix_titles_info" titles
 LEFT JOIN "netflix_people" people
@@ -86,7 +89,8 @@ ON titles.show_id=people.show_id
 where titles.title='The Starling'
 
 #5. What is the oldest movie in the database and what year was it made? 
-select title, release_year
+
+SELECT title, release_year
 FROM "netflix_titles_info"
 WHERE type='Movie'
 ORDER BY release_year asc
