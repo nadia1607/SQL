@@ -1,0 +1,52 @@
+SELECT Count (orderid)
+FROM BIT_DB.JanSales
+WHERE length (orderid)=6
+AND orderid <> "Order ID";
+
+
+SELECT Count (orderid)
+FROM BIT_DB.JanSales
+WHERE length (orderid)=6
+AND orderid <> "Order ID"
+AND product="iPhone";
+
+SELECT DISTINCT acctnum
+from BIT_DB.customers
+INNER JOIN BIT_DB.FebSales
+ON customers.order_id=FebSales.orderID
+where length (orderid)=6
+and orderid <>"Order ID";
+
+SELECT distinct product, price
+from BIT_DB.JanSales
+group by product, price
+order by price asc limit 1;
+
+SELECT SUM(quantity)*price as Revenue, product
+from BIT_DB.JanSales
+GROUP BY product;
+
+SELECT sum (quantity), product,sum (quantity)*price as Revenue
+from BIT_DB.FebSales
+where location="548 Lincoln St, Seattle, WA 98101"
+Group by product;
+
+SELECT count (distinct cust.acctnum),avg (quantity*price)
+from BIT_DB.FebSales Feb
+Left Join BIT_DB.customers cust
+on feb.orderid=cust.order_id
+where feb.quantity >2
+and length (orderid)=6
+and orderid <> "Order ID";
+
+SELECT product, sum(quantity)
+from BIT_DB.FebSales
+WHERE LOCATION LIKE "%Los Angeles%"
+group by product;
+
+
+
+
+
+
+
