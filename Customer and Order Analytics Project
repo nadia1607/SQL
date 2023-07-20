@@ -1,17 +1,20 @@
 # This project was created using SQLite dialect and reveals some insights into a customer data.
 
+#Q1= How many orders were placed in January?
+
 SELECT Count (orderid)
 FROM BIT_DB.JanSales
 WHERE length (orderid)=6
 AND orderid <> "Order ID";
 
-
+# Q2= How many of these orders were for an "iPhone"?
 SELECT Count (orderid)
 FROM BIT_DB.JanSales
 WHERE length (orderid)=6
 AND orderid <> "Order ID"
 AND product="iPhone";
 
+#Q3= Select the customer account numbers for all orders that were placed in February.
 SELECT DISTINCT acctnum
 from BIT_DB.customers
 INNER JOIN BIT_DB.FebSales
@@ -19,20 +22,24 @@ ON customers.order_id=FebSales.orderID
 where length (orderid)=6
 and orderid <>"Order ID";
 
+#Q4= Which product was the cheapest one sold in January and what was the price?
 SELECT distinct product, price
 from BIT_DB.JanSales
 group by product, price
 order by price asc limit 1;
 
+#Q5= What is the total revenue for each product sold in January?
 SELECT SUM(quantity)*price as Revenue, product
 from BIT_DB.JanSales
 GROUP BY product;
 
+#Q6= Which products were sold in February at 548 Lincoln St Seattle WA 98101? How many of each were sold and what was the total revenue?
 SELECT sum (quantity), product,sum (quantity)*price as Revenue
 from BIT_DB.FebSales
 where location="548 Lincoln St, Seattle, WA 98101"
 Group by product;
 
+#Q7= How many customers ordered more than 2 products at a time in February and what was the average amount spent for those customers?
 SELECT count (distinct cust.acctnum),avg (quantity*price)
 from BIT_DB.FebSales Feb
 Left Join BIT_DB.customers cust
@@ -41,6 +48,7 @@ where feb.quantity >2
 and length (orderid)=6
 and orderid <> "Order ID";
 
+#Q8= List all the products sold in Los Angeles in February and include how many of each were sold.
 SELECT product, sum(quantity)
 from BIT_DB.FebSales
 WHERE LOCATION LIKE "%Los Angeles%"
