@@ -1,3 +1,5 @@
+# This project was created using SQLite 
+
 SELECT Count (orderid)
 FROM BIT_DB.JanSales
 WHERE length (orderid)=6
