@@ -1,4 +1,4 @@
-# This project was created using SQLite 
+# This project was created using SQLite dialect and reveals some insights into a customer data.
 
 SELECT Count (orderid)
 FROM BIT_DB.JanSales
