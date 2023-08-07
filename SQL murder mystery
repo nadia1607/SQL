@@ -1,0 +1,84 @@
+--I have created this project using SQL Murder Mystery. The SQL Murder Mystery was created by Joon Park and Cathy He while they were Knight Lab fellows.
+
+--A crime has taken place and the detective needs your help. The detective gave you the crime scene report, but you somehow lost it. You vaguely remember that the crime was a murder that occurred sometime on Jan.15, 2018 and that it took place in SQL City. 
+
+
+--crime type= murder
+--date=Jan 15, 2018
+--place= SQL City
+
+SELECT * FROM crime_scene_report 
+WHERE type = 'murder' 
+AND city = 'SQL City'
+and date="20180115"  
+
+==Using the above query, I found out that there are 2 witnesses for this murder:
+--There are 2 witnesses:
+--Witness 1 lives on the last house on “Notyhwestyern Dr” 14887 Morty Schapiro
+--Witness 2 “Annabel” lives somewhere on “Franklin Ave” 16371 Annabel Miller
+
+SELECT *
+FROM person
+WHERE address_street_name='Northwestern Dr'
+order by address_number desc
+limit 1;
+
+SELECT *
+FROM person
+WHERE address_street_name Like'Franklin Ave'
+and name like '%Annabel%'
+
+==After finding their information, I decided to look into their interviews..
+SELECT *
+FROM interview
+where person_id in (14887,16371)
+
+==I got the following information from their interviews:
+--Get Fit Now Gym Gold membership
+--membership number started with "48Z"
+-- licence plate included "H42W"
+--Last seen in gym on Jan 9th
+
+SELECT p.*,ci.*
+FROM drivers_license AS dl
+Inner Join person as p on dl.id=p.license_id
+Inner Join get_fit_now_member as gf On p.id=gf.person_id
+Inner Join get_fit_now_check_in as ci On gf.id=ci.membership_id
+where plate_number like '%H42W%'
+and membership_status= 'gold'
+and check_in_date='20180109'
+
+--Get Fit Now Gym Gold membership
+--membership number started with "48Z"
+-- licence plate included "H42W"
+--Last seen in gym on Jan 9th
+
+
+== Based on the above query, I believe that the criminal was Jeremy Bowers but now I need to find the mastermind behind the murder. When I looked into his interview, I got some information:
+--hired by a woman
+--Height is around 5'5 (65") or 5'7 (67")
+-- hair colour=red
+--car make and model=Tesla S
+--attended SQL symphone concert 3 times in Dec 2017
+
+With CTE as (
+select person_id,
+Count (*) as visits
+from facebook_event_checkin
+where date between 20171201 and 20171231
+and event_name='SQL Symphony Concert'
+Group by person_id 
+Having Count (*) >=3)
+
+select p.*,fb.*
+from drivers_license as dl
+Inner Join person as p ON dl.id=p.license_id
+Inner Join CTE as fb On p.id=fb.person_id
+where gender='female'
+and hair_color='red'
+and car_make='Tesla'
+and car_model='Model S'
+and height>=65
+and height<=67
+
+I solved the mystery and found out that Miranda Priestly was the mastermind behind this murder
