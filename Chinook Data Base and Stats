@@ -1,3 +1,5 @@
+## This project provides insight into data from a music company using SQLite
+
 --Show Customers (their full names, customer ID, and country) who are not in the US. 
 SELECT  FirstName, LastName,CustomerID, Country
 FROM chinook.customers
